@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { UsuarioService } from '../../services/usuario-service';
 import { Usuario } from '../../models/usuario';
 import { FormsModule } from '@angular/forms';
+import { AuthenticationService } from '../../service/authentication-service';
 
 @Component({
   selector: 'app-formulario',
@@ -11,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class Formulario {
   private usuarioService = inject(UsuarioService);
+  public authService = inject(AuthenticationService)
 
   //Variable para controlar si es put o post
   editando = false;
@@ -20,7 +22,8 @@ export class Formulario {
   nuevoUsuario: Usuario={
     nombre:'',
     email:'',
-    password:''
+    password:'',
+    rol: 'EMPLEADO'
   }
 
   ngOnInit(){
@@ -68,7 +71,7 @@ export class Formulario {
   //limpiar
   limpiarFormulario(){
     this.editando=false;
-    this.nuevoUsuario={nombre:'', email:'',password:''}
+    this.nuevoUsuario={nombre:'', email:'',password:'', rol:'EMPLEADO'}
   }
   
 }

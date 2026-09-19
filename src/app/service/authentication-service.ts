@@ -11,6 +11,8 @@ export class AuthenticationService {
 
   loginTrue = signal<boolean>(localStorage.getItem('sesion')==='true');
 
+  rolActual = signal<string | null>(localStorage.getItem('rol'));
+
   //FUNCION PARA INICIO DE SECION
   login(email:string, pass:string):Observable<boolean>{
     return this.usuarioService.getUsuarios().pipe(
@@ -19,9 +21,14 @@ export class AuthenticationService {
         if(usuarioExiste){
           localStorage.setItem('sesion', 'true');
           localStorage.setItem('user', JSON.stringify(usuarioExiste));
+          localStorage.setItem('rol', usuarioExiste.rol);
+
+          this.rolActual.set(usuarioExiste.rol);
+
           this.loginTrue.set(true);
           return true;
-        } return false;
+        } 
+        return false;
       })
     );
   }
@@ -29,7 +36,9 @@ export class AuthenticationService {
   logout(){
     localStorage.removeItem('sesion');
     localStorage.removeItem('user');
+    localStorage.removeItem('rol');
     this.loginTrue.set(false);
+    this.rolActual.set(null);
   }
 
 }

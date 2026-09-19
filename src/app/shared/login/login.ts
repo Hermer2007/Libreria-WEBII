@@ -28,7 +28,7 @@ export class Login {
     })
   }
 
-  cerrarSecion(){
+    cerrarSecion(){
     this.authService.logout();
     this.route.navigate(['/login']);
   }
